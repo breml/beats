@@ -82,17 +82,18 @@ type config struct {
 	CleanInactive time.Duration `config:"clean_inactive" validate:"min=0"`
 
 	// Input
-	Enabled        bool            `config:"enabled"`
-	ExcludeFiles   []match.Matcher `config:"exclude_files"`
-	IgnoreOlder    time.Duration   `config:"ignore_older"`
-	Paths          []string        `config:"paths"`
-	ScanFrequency  time.Duration   `config:"scan_frequency" validate:"min=0,nonzero"`
-	CleanRemoved   bool            `config:"clean_removed"`
-	HarvesterLimit uint32          `config:"harvester_limit" validate:"min=0"`
-	Symlinks       bool            `config:"symlinks"`
-	TailFiles      bool            `config:"tail_files"`
-	RecursiveGlob  bool            `config:"recursive_glob.enabled"`
-	IgnoreDeviceID bool            `config:"ignore_device_id"`
+	Enabled                  bool            `config:"enabled"`
+	ExcludeFiles             []match.Matcher `config:"exclude_files"`
+	IgnoreOlder              time.Duration   `config:"ignore_older"`
+	Paths                    []string        `config:"paths"`
+	ScanFrequency            time.Duration   `config:"scan_frequency" validate:"min=0,nonzero"`
+	CleanRemoved             bool            `config:"clean_removed"`
+	HarvesterLimit           uint32          `config:"harvester_limit" validate:"min=0"`
+	Symlinks                 bool            `config:"symlinks"`
+	TailFiles                bool            `config:"tail_files"`
+	RecursiveGlob            bool            `config:"recursive_glob.enabled"`
+	IgnoreDeviceID           bool            `config:"ignore_device_id"`
+	MigrateToIgnoredDeviceID bool            `config:"migrate_to_ignored_device_id"`
 
 	// Harvester
 	BufferSize int    `config:"harvester_buffer_size"`

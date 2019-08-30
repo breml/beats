@@ -168,6 +168,23 @@ func (p *Input) loadStates(states []file.State) error {
 		if p.matchesFile(state.Source) && p.matchesMeta(state.Meta) {
 			state.TTL = -1
 
+			if p.config.IgnoreDeviceID && p.config.MigrateToIgnoredDeviceID && state.FileStateOS.Device != 0 {
+				// Migrate existing device ID if device ID are ignored
+				// and migration is enabled.
+				logp.Debug("input", "migrate state for inode: %d from %d to device ID 0", state.FileStateOS.Inode, state.FileStateOS.Device)
+
+				// Remove old entry
+				p.removeState(state)
+
+				// Setup properties for the migrated state
+				state.TTL = -1
+				state.FileStateOS.Device = 0
+
+				// Reset ID because device ID as part of the ID has changed
+				state.Id = ""
+				state.ID()
+			}
+
 			// In case a input is tried to be started with an unfinished state matching the glob pattern
 			if !state.Finished {
 				return fmt.Errorf("Can only start an input when all related states are finished: %+v", state)
